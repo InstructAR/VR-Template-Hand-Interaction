@@ -9,25 +9,31 @@ public class MarchingCubes : MonoBehaviour
     {
         List<Vector3> vertices = new List<Vector3>();
         List<int> triangles = new List<int>();
-        Vector3 cubeOffsetForChunk;
+        Vector3 tempVector3;
         //Find the densities for the points of this cube
         List<float> tempDensities = new List<float>(8);
         for (int i = 0; i < 8; i++)
             tempDensities.Add(0);
-        for (int xi = 0; xi < dimension - 1; xi++)
+        for (int xi = 0; xi < dimension; xi++)
         {
-            for (int yi = 0; yi < dimension - 1; yi++)
+            for (int yi = 0; yi < dimension; yi++)
             {
-                for (int zi = 0; zi < dimension - 1; zi++)
+                for (int zi = 0; zi < dimension; zi++)
                 {
                     for (int i = 0; i < 8; i++)
                     {
-                        tempDensities[i] = densityValues[xi + (int)tbl.points[i].x][ yi + (int)tbl.points[i].y][zi + (int)tbl.points[i].z];
+                        tempDensities[i] = densityValues
+                            [xi + (int)tbl.points[i].x][yi + (int)tbl.points[i].y][zi + (int)tbl.points[i].z];
+                        Debug.Log(
+                              (xi + (int)tbl.points[i].x) + " "
+                            + (yi + (int)tbl.points[i].y) + " "
+                            + (zi + (int)tbl.points[i].z) + ": " + tempDensities[i]);
                     }
-                    cubeOffsetForChunk.x = xi;
-                    cubeOffsetForChunk.y = yi;
-                    cubeOffsetForChunk.z = zi;
-                    Polygonalizer.PolygonalizeCube(isoLevel, size, (position + cubeOffsetForChunk), ref tempDensities, ref vertices, ref triangles);
+                    tempVector3.x = xi;
+                    tempVector3.y = yi;
+                    tempVector3.z = zi;
+                    Polygonalizer.PolygonalizeCube(isoLevel, size, (position + tempVector3), 
+                        ref tempDensities, ref vertices, ref triangles);
                 }
             }
         }
@@ -35,6 +41,7 @@ public class MarchingCubes : MonoBehaviour
         returnGameObject.AddComponent<MeshRenderer>().material = material;
         returnGameObject.AddComponent<MeshFilter>();
         Mesh mesh = returnGameObject.GetComponent<MeshFilter>().mesh;
+        mesh.Clear();
         mesh.vertices = vertices.ToArray();
         mesh.triangles = triangles.ToArray();
         mesh.RecalculateNormals();

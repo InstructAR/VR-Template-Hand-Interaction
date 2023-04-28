@@ -16,26 +16,27 @@ public class ChunkManager : MonoBehaviour
         Vector3 tempVector3;
         List<List<float>> planes = new List<List<float>>(dimension);
         List<float> lines = new List<float>(dimension);
-        for(int xi = 0; xi < dimension; xi++)
+        for(int xi = 0; xi <= dimension; xi++)
         {
-            for (int yi = 0; yi < dimension; yi++)
+            for (int yi = 0; yi <= dimension; yi++)
             {
-                for (int zi = 0; zi < dimension; zi++)
+                for (int zi = 0; zi <= dimension; zi++)
                 {
 
                     tempVector3.x = xi;
                     tempVector3.y = yi;
                     tempVector3.z = zi;
                     lines.Add(noiseGenerator.noise(tempVector3 * noiseScale));
-                    GameObject tempSphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-                    tempSphere.transform.position = tempVector3;
-                    tempSphere.transform.localScale = noiseGenerator.noise(tempVector3 * noiseScale) * Vector3.one;
+                    //GameObject tempSphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                    //tempSphere.transform.position = tempVector3;
+                    //tempSphere.transform.parent = transform;
+                    //tempSphere.transform.localScale = noiseGenerator.noise(tempVector3 * noiseScale) * Vector3.one;
                 }
                 planes.Add(lines);
             }
             densityField.Add(planes);
         }
-        MarchingCubes.GenerateChunk(isoLevel, 1.0f, Vector3.zero, dimension, densityField, chunkMaterial);
+        MarchingCubes.GenerateChunk(isoLevel, 0.1f, Vector3.zero, dimension, densityField, chunkMaterial);
     }
     //public static GameObject GenerateChunk(float isoLevel, float size, Vector3 position, int dimension, List<float> densityValues)
 }
