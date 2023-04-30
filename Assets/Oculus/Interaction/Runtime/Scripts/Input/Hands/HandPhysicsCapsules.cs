@@ -136,6 +136,7 @@ namespace Oculus.Interaction.Input
 
                 CapsuleCollider collider = CreateCollider(boneName,
                     body.transform, boneEnd, boneRadius, offset);
+                collider.transform.tag = "Hand";
 
                 BoneCapsule capsule = new BoneCapsule(parentJoint, currentJoint, body, collider);
                 _capsules.Add(capsule);
