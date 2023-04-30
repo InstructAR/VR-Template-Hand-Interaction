@@ -7,9 +7,9 @@ public class AddDensity : MonoBehaviour
 {
     public DensityField densityField;
     public Vector3 intPos, tempVector3;
-    public Transform targetFinger, targetThumb;
+    public Transform targetFinger, indexFinger, targetThumb;
     public float scale = 10.0f, sqrtTwoTimesTwo = 2.82842712475f;
-    private float distance;
+    private float distance, distance2;
     private void Awake()
     {
         StartCoroutine("WaitForFinger");
@@ -19,12 +19,13 @@ public class AddDensity : MonoBehaviour
     {
         yield return new WaitForSeconds(1.0f);
         targetFinger = transform.FindChildRecursive("Hand_IndexTip");
+        indexFinger = transform.FindChildRecursive("Hand_MiddleTip");
         targetThumb = transform.FindChildRecursive("Hand_ThumbTip");
     }
 
     private void FixedUpdate()
     {
-        if (densityField != null && targetFinger != null && Vector3.Distance(targetFinger.position, targetThumb.position) < 0.01f)
+        if (densityField != null && targetFinger != null)
         {
             for(int xi = 0; xi < densityField.dimension; xi++)
             {
@@ -36,8 +37,12 @@ public class AddDensity : MonoBehaviour
                         tempVector3.y = yi;
                         tempVector3.z = zi;
                         distance = Mathf.Abs(Vector3.Distance(targetFinger.position, tempVector3 / 10.0f));
-                        if(distance < 0.3f)
-                            densityField.AddToDensity((0.3f - distance) * Time.deltaTime, xi, yi, zi);
+                        if(Vector3.Distance(targetFinger.position, targetThumb.position) < 0.01f && distance < 0.3f)
+                                densityField.AddToDensity((0.3f - distance) * Time.deltaTime, xi, yi, zi);
+                        distance2 = Mathf.Abs(Vector3.Distance(indexFinger.position, tempVector3 / 10.0f));
+
+                        if (Vector3.Distance(indexFinger.position, targetThumb.position) < 0.01f && distance2 < 0.4f)
+                            densityField.AddToDensity((distance2 - 0.4f) * Time.deltaTime, xi, yi, zi);
                     }
                 }
             }
