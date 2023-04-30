@@ -37,11 +37,11 @@ public class AddDensity : MonoBehaviour
                         tempVector3.y = yi;
                         tempVector3.z = zi;
                         distance = Mathf.Abs(Vector3.Distance(targetFinger.position, tempVector3 / 10.0f));
-                        if(Vector3.Distance(targetFinger.position, targetThumb.position) < 0.01f && distance < 0.3f)
+                        if(Vector3.Distance(targetFinger.position, targetThumb.position) < 0.01f && distance < 0.1f)
                                 densityField.AddToDensity((0.3f - distance) * Time.deltaTime, xi, yi, zi);
                         distance2 = Mathf.Abs(Vector3.Distance(indexFinger.position, tempVector3 / 10.0f));
 
-                        if (Vector3.Distance(indexFinger.position, targetThumb.position) < 0.01f && distance2 < 0.4f)
+                        if (Vector3.Distance(indexFinger.position, targetThumb.position) < 0.02f && distance2 < 0.1f)
                             densityField.AddToDensity((distance2 - 0.4f) * Time.deltaTime, xi, yi, zi);
                     }
                 }
