@@ -7,12 +7,16 @@ public class AddDensity : MonoBehaviour
 {
     public DensityField densityField;
     public Vector3 intPos, tempVector3;
-    public Transform targetFinger, indexFinger, targetThumb;
+    public Transform targetFinger, indexFinger, pinkyFinger, targetThumb;
     public float scale = 10.0f, sqrtTwoTimesTwo = 2.82842712475f;
-    private float distance, distance2;
+    private float distance, distance2, distance3;
+    public WaterParticleManager particleManager;
+    public float lastParticleSpawnTime = 0, particleSpawnDelay = 0.5f;
+
     private void Awake()
     {
         StartCoroutine("WaitForFinger");
+        lastParticleSpawnTime = Time.time;
     }
 
     private IEnumerator WaitForFinger()
@@ -20,6 +24,7 @@ public class AddDensity : MonoBehaviour
         yield return new WaitForSeconds(1.0f);
         targetFinger = transform.FindChildRecursive("Hand_IndexTip");
         indexFinger = transform.FindChildRecursive("Hand_MiddleTip");
+        pinkyFinger = transform.FindChildRecursive("Hand_PinkyTip");
         targetThumb = transform.FindChildRecursive("Hand_ThumbTip");
     }
 
@@ -40,9 +45,14 @@ public class AddDensity : MonoBehaviour
                         if(Vector3.Distance(targetFinger.position, targetThumb.position) < 0.01f && distance < 0.1f)
                                 densityField.AddToDensity((0.3f - distance) * Time.deltaTime, xi, yi, zi);
                         distance2 = Mathf.Abs(Vector3.Distance(indexFinger.position, tempVector3 / 10.0f));
-
                         if (Vector3.Distance(indexFinger.position, targetThumb.position) < 0.02f && distance2 < 0.1f)
                             densityField.AddToDensity((distance2 - 0.4f) * Time.deltaTime, xi, yi, zi);
+                        distance2 = Mathf.Abs(Vector3.Distance(pinkyFinger.position, tempVector3 / 10.0f));
+                        if (Vector3.Distance(pinkyFinger.position, targetThumb.position) < 0.03f && distance3 < 0.15f && Time.time - lastParticleSpawnTime > particleSpawnDelay)
+                        {
+                            particleManager.CreateParticle(pinkyFinger.position);
+                            lastParticleSpawnTime = Time.time;
+                        }
                     }
                 }
             }

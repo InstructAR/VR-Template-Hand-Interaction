@@ -1,0 +1,5 @@
+C:/Users/Sailor Usher/Documents/GitHub/VR-Template-Hand-Interaction/.utmp/RelWithDebInfo/43t71232/arm64-v8a/CMakeFiles/edit_cache.dir
+C:/Users/Sailor Usher/Documents/GitHub/VR-Template-Hand-Interaction/.utmp/RelWithDebInfo/43t71232/arm64-v8a/CMakeFiles/rebuild_cache.dir
+C:/Users/Sailor Usher/Documents/GitHub/VR-Template-Hand-Interaction/.utmp/RelWithDebInfo/43t71232/arm64-v8a/FramePacing/CMakeFiles/swappywrapper.dir
+C:/Users/Sailor Usher/Documents/GitHub/VR-Template-Hand-Interaction/.utmp/RelWithDebInfo/43t71232/arm64-v8a/FramePacing/CMakeFiles/edit_cache.dir
+C:/Users/Sailor Usher/Documents/GitHub/VR-Template-Hand-Interaction/.utmp/RelWithDebInfo/43t71232/arm64-v8a/FramePacing/CMakeFiles/rebuild_cache.dir

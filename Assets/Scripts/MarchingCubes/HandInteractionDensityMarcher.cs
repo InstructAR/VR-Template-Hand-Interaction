@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class HandInteractionDensityMarcher : MonoBehaviour
 {
-    private MeshCollider meshCollider;
+    public MeshCollider meshCollider;
     public float isoLevel = 0.5f, size = 0.1f;
     public Mesh mesh;
     List<float> pointValues = new List<float>();
@@ -58,6 +58,10 @@ public class HandInteractionDensityMarcher : MonoBehaviour
         mesh.vertices = vertices.ToArray();
         mesh.triangles = triangles.ToArray();
         mesh.RecalculateNormals();
+        if(mesh.vertices.Length > 0)
+            meshCollider.sharedMesh = mesh;
+        else
+            meshCollider.sharedMesh = null;
         StartCoroutine("GenerateNewField");
     }
 }
